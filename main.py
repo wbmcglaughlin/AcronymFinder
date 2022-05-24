@@ -1,5 +1,5 @@
 import random
-import nltk
+import data_to_csv
 
 
 def get_acronym(string, acronym, fmt):
@@ -8,7 +8,7 @@ def get_acronym(string, acronym, fmt):
 
     # for i in range(max([len(line) for line in lines])):
     i = 22
-    words = get_words(acronym, fmt, lines, i)
+    words = data_to_csv.get_words(acronym, fmt, lines, i)
     try:
         for j in range(len(fmt)):
             print(words[j][int(random.randrange(len(words[j])))], end=' ')
@@ -17,22 +17,6 @@ def get_acronym(string, acronym, fmt):
 
     comb = get_combinations(words)
     print(f'\nComb: {i:2.0f}: {comb}')
-
-
-def get_words(acronym, fmt, lines, max_len):
-    words = [[] for _ in range(len(fmt))]
-    for line in lines:
-        line = line.rstrip('\n')
-        if line[0] in acronym:
-            if len(line) < max_len:
-                ind = acronym.index(line[0])
-                try:
-                    if fmt[ind] in wn.synsets(line)[0].pos():
-                        words[ind].append(line)
-                except IndexError as e:
-                    pass
-
-    return words
 
 
 def get_combinations(words):
@@ -44,13 +28,6 @@ def get_combinations(words):
 
 
 if __name__ == "__main__":
-    try:
-        nltk.data.find('wordnet')
-    except LookupError as e:
-        nltk.download('wordnet')
-
-    from nltk.corpus import wordnet as wn
-
     acronym = 'saturn'
     fmt = 'aanvan'
 
