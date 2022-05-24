@@ -1,15 +1,10 @@
 import random
-
-from nltk.corpus import wordnet as wn
 import nltk
 
 
-def read_file(string):
+def get_acronym(string, acronym, fmt):
     with open(string) as word_file:
         lines = word_file.readlines()
-
-    acronym = 'saturn'
-    fmt = 'aanvan'
 
     # for i in range(max([len(line) for line in lines])):
     i = 22
@@ -49,5 +44,14 @@ def get_combinations(words):
 
 
 if __name__ == "__main__":
-    # nltk.download()
-    read_file('./words')
+    try:
+        nltk.data.find('wordnet')
+    except LookupError as e:
+        nltk.download('wordnet')
+
+    from nltk.corpus import wordnet as wn
+
+    acronym = 'saturn'
+    fmt = 'aanvan'
+
+    get_acronym('./words', acronym, fmt)
