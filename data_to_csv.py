@@ -16,29 +16,13 @@ def data_to_csv(word_file_path):
         try:
             word_type_result.append(wn.synsets(line)[0].pos())
         except IndexError as e:
-            word_type_result.append('')
+            word_type_result.append('_')
 
     with open("./data.csv", "w+") as data_csv:
         csv_writer = csv.writer(data_csv)
         csv_writer.writerow(['word', 'type'])
         for i in range(len(lines_no_new_line)):
             csv_writer.writerow([lines_no_new_line[i], word_type_result[i]])
-
-
-def get_words(acronym, fmt, lines, max_len):
-    words = [[] for _ in range(len(fmt))]
-    for line in lines:
-        line = line.rstrip('\n')
-        if line[0] in acronym:
-            if len(line) < max_len:
-                ind = acronym.index(line[0])
-                try:
-                    if fmt[ind] in wn.synsets(line)[0].pos():
-                        words[ind].append(line)
-                except IndexError as e:
-                    pass
-
-    return words
 
 
 if __name__ == "__main__":
